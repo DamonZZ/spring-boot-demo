@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.citi.skynet.mapper.history.RfqHistoryMapper">
+	<resultMap type="rfqProperty" id="rfqPropertList">
+		<id column="id" property="id" />
+		<result column="rfq_id" property="rfqId" />
+		<result column="version" property="version" />
+		<result column="name" property="name" />
+		<result column="value" property="value" />
+	</resultMap>
+
+	<select id="selectRfqHeader" resultType="rfqHeader">
+		select
+		id,rfq_id,version,parent_id,flow,message_id,state,sent_by,event,timestamp,roledefinition,routingtargets
+		from saas_rfqhdr
+	</select>
+
+	<select id="selectRfqHeaderByRfqId"
+		parameterType="java.lang.String" resultType="rfqHeader">
+		select
+		id,rfq_id,version,parent_id,flow,message_id,state,sent_by,event,timestamp,roledefinition,routingtargets
+		from saas_rfqhdr where rfq_id=#{rfqId}
+	</select>
+
+	<select id="selectRfqPropertiesByRfqId"
+		parameterType="java.lang.String" resultMap="rfqPropertList">
+		select
+		id,rfq_id,version,name,value from saas_rfqdtls where
+		rfq_id=#{rfqId}
+	</select>
+
+	<insert id="insertRfqHeader" parameterType="rfqHeader"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		saas_rfqhdr(id,rfq_id,version,parent_id,flow,message_id,state,sent_by,event,timestamp,roledefinition,routingtargets)
+		values(#{id},#{rfqId},#{version},#{parentId},#{flow},#{messageId},#{state},#{sentBy},#{event},#{timestamp},#{roledefinition},#{routingtargets})
+	</insert>
+
+	<insert id="insertRfqProperties" parameterType="java.util.List"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		saas_rfqdtls(id,rfq_id,version,name,value) values
+		<foreach collection="list" item="rfqProperty" index="index"
+			separator=",">
+			(#{rfqProperty.id},#{rfqProperty.rfqId},#{rfqProperty.version},#{rfqProperty.name},#{rfqProperty.value})
+		</foreach>
+	</insert>
+
+	<update id="updateRfqHeader" parameterType="rfqHeader">
+		update saas_rfqhdr
+		set version = #{version},
+		parent_id = #{parentId},
+		flow = #{flow},
+		message_id = #{messageId},
+		state = #{state},
+		sent_by = #{sentBy},
+		event = #{event},
+		timestamp = #{timestamp},
+		roledefinition = #{roledefinition},
+		routingtargets = #{routingtargets}
+		WHERE
+		rfq_id = #{rfqId} and version= #{version};
+	</update>
+
+</mapper>

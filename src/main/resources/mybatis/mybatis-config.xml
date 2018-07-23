@@ -17,10 +17,16 @@
 	<typeAliases>
 		<typeAlias type="com.citi.skynet.common.model.User"
 			alias="user" />
+		<typeAlias type="com.citi.skynet.common.model.RfqHeader"
+			alias="rfqHeader" />
+		<typeAlias type="com.citi.skynet.common.model.RfqProperty"
+			alias="rfqProperty" />
+		<typeAlias type="com.citi.skynet.common.model.RfqMessage"
+			alias="rfqMessage" />
 	</typeAliases>
-
 	<mappers>
 		<mapper resource="mapper/user.xml" />
+		<mapper resource="mapper/rfqactive.xml" />
+		<mapper resource="mapper/rfqhistory.xml" />
 	</mappers>
-
 </configuration>

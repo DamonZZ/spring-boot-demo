@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.citi.skynet.common.model.User;
-import com.citi.skynet.mapper.UserMapper;
 import com.citi.skynet.service.UserService;
 
 @RestController
@@ -17,7 +16,7 @@ public class UserController {
 	private UserService userSerivce;
 	
 	@RequestMapping("users")
-	public List<User> getUsers(){
+	public List<User> getUsers(){	
 		return userSerivce.selectUsers();
 	}
 }
