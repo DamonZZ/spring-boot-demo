@@ -12,7 +12,7 @@ public class RedisService {
 	StringRedisTemplate stringRedisTemplate;
 
 	public void add(String key, String value, Long time) {
-		stringRedisTemplate.opsForValue().set(key, value, time, TimeUnit.MINUTES);
+		stringRedisTemplate.opsForValue().set(key, value, time, TimeUnit.DAYS);
 	}
 
 	// public void add(String key, List<User> users, Long time) {
